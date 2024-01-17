@@ -32,11 +32,12 @@ void printScr(double** A, int h, int l) {
 void maths(double** A, int h, int l, float scale, int t, float speed) {
 	for (int i=0; i<h; i++) {
 		for (int j=0; j<l; j++) {
-			A[i][j] = 2*sin(scale*i + t*speed) * sin(scale*j + t*speed);
-			A[i][j] += sin(scale*2*i + t*speed) * sin(scale*2*j + t*speed);
-			A[i][j] += 0.5*sin(scale*4*i + t*speed) * sin(scale*4*j + t*speed);
-			A[i][j] += 0.25*sin(scale*8*i + t*speed) * sin(scale*8*j + t*speed);
-			A[i][j] += 0.125*sin(scale*16*i + t*speed) * sin(scale*16*j + t*speed);
+			A[i][j] = 2*sin(scale*0.5*i + t*speed) * sin(scale*j + t*speed);
+			A[i][j] += sin(scale*1.5*i + t*speed) * sin(scale*2*j + t*speed);
+			A[i][j] += 0.5*sin(scale*4.5*i + t*speed) * sin(scale*4*j + t*speed);
+			A[i][j] += 0.25*sin(scale*13.5*i + t*speed) * sin(scale*8*j + t*speed);
+			A[i][j] += 0.125*sin(scale*40.5*i + t*speed) * sin(scale*16*j + t*speed);
+			A[i][j] += 0.0625*sin(scale*131.5*i + t*speed) * sin(scale*32*j + t*speed);
 		}
 	}
 }
@@ -68,7 +69,7 @@ int main(void) {
 	struct timeval t, t1;
 	for (int i=0;;i++) {
 		gettimeofday(&t, NULL);
-		maths(a, h, l, 0.1, i, 0.01); 
+		maths(a, h, l, 0.075, i, 0.01); 
 		printScr(a, h, l);
 		usleep(1000);
 		gettimeofday(&t1, NULL);
