@@ -10,18 +10,19 @@ void printScr(double** A, int h, int l) {
 		for (int j=0; j<l; j++) {
 			if (A[i][j] <= -3.5) printf(".");
 			else if (A[i][j] <= -3.0) printf("-");
-			else if (A[i][j] <= -2.5) printf(":");
-			else if (A[i][j] <= -2.0) printf("~");
+			else if (A[i][j] <= -2.5) printf("~");
+			else if (A[i][j] <= -2.0) printf(":");
 			else if (A[i][j] <= -1.5) printf("_");
 			else if (A[i][j] <= -1.0) printf("*");
 			else if (A[i][j] <= -0.5) printf("?");
 			else if (A[i][j] <= 0) printf("|");
 			else if (A[i][j] <= 0.5) printf("/");
-			else if (A[i][j] <= 1.5) printf("[");
-			else if (A[i][j] <= 2.0) printf("#");
+			else if (A[i][j] <= 1.0) printf("[");
+			else if (A[i][j] <= 1.5) printf("%%");
+			else if (A[i][j] <= 2.0) printf("O");
 			else if (A[i][j] <= 2.5) printf("W");
 			else if (A[i][j] <= 3.0) printf("&");
-			else if (A[i][j] <= 3.5) printf("%%");
+			else if (A[i][j] <= 3.5) printf("#");
 			else printf("@");
 			
 		}
@@ -66,7 +67,6 @@ int main(void) {
 		a[i] = (double*)malloc(l*sizeof(double));
 	}
 	
-	
 	struct timeval t, t1, f1, f2;
 	int framerate = 0;
 	int framecount = 0;
@@ -91,7 +91,6 @@ int main(void) {
 		printf("\e[1;1H\e[2J");
 		if (input() == 1) break;
 	}
-
 
 	for (int i=0; i<h; i++) {
 		free(a[i]);
