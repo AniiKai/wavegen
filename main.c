@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <sys/ioctl.h>
 #include <math.h>
 
 void printScr(double** A, int h, int l) {
@@ -44,6 +45,7 @@ void maths(double** A, int h, int l, float scale, int t, float speed) {
 }
 
 int input() {
+	// used to capture live user input
 	fd_set readfs;
 	int res, key;
 	struct timeval timeout;
@@ -60,13 +62,20 @@ int input() {
 }
 
 int main(void) {
-	int h = 69;
-	int l = 246;
+	// get width & height
+	struct winsize w;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+	int h = w.ws_row-1;
+	int l = w.ws_col;
+	// create array of width + height
 	double** a = (double**)malloc(h*sizeof(double*));
 	for (int i=0; i<h; i++) {
 		a[i] = (double*)malloc(l*sizeof(double));
 	}
 	
+
+	// these are used for capping fps at 60 as well as displaying current framerate
 	struct timeval t, t1, f1, f2;
 	int framerate = 0;
 	int framecount = 0;
@@ -74,7 +83,7 @@ int main(void) {
 	for (int i=0;;i++) {
 		framecount++;
 		gettimeofday(&t, NULL);
-		maths(a, h, l, 0.025, i, 0.005); 
+		maths(a, h, l, 0.03, i, 0.005); 
 		printScr(a, h, l);
 		usleep(1000);
 		gettimeofday(&f2, NULL);
@@ -83,7 +92,7 @@ int main(void) {
 			framecount = 0;
 			gettimeofday(&f1, NULL);
 		}
-		//printf("framerate: %d\n", framerate);
+		printf("framerate: %d\n", framerate);
 		gettimeofday(&t1, NULL);
 		int diff = 1000000 - (t1.tv_usec - t.tv_usec);
 		diff = diff / 60;
